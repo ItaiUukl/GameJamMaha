@@ -96,7 +96,7 @@ public class MahaGameManager : MonoBehaviour
         int side = HandSide(hand);
         
         handsManager.ChangeHand(hand);
-
+        
         if (_prayers[side].IsAccepted(handsManager.GesturesInSide(side)))
         {
             CompletePrayer(side);
