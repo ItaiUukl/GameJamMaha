@@ -33,6 +33,10 @@ ExportedObj/
 *.opendb
 *.VC.db
 
+# Logs
+*.log
+/[Ll]ogs/
+
 # Unity3D generated meta files
 *.pidb.meta
 *.pdb.meta
