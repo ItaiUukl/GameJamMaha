@@ -1,14 +1,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Prayer : MonoBehaviour
+public class Prayer
 {
     private int _size = LevelGlobals.Instance.initPrayerSize;
-    
-    public void SetPrayerSize(int size)
+
+    public int PrayerSize
     {
-        _size = size;
-        //TODO: Implement
+        get => _size;
+        set
+        {
+            _size = value;
+            //TODO: Implement
+        }
     }
 
     public void Generate(List<GestureSO> gestures, List<GestureSO> avoid)
