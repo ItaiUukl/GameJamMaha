@@ -5,6 +5,9 @@ public class Prayer
 {
     private int _size = LevelGlobals.Instance.initPrayerSize;
 
+    private List<GestureSO> _prayerGestures;
+    private int _gesturesNumToFinish;
+
     public int PrayerSize
     {
         get => _size;
@@ -18,18 +21,17 @@ public class Prayer
     public void Generate(List<GestureSO> gestures, List<GestureSO> avoid)
     {
         //TODO: Implement
+        _gesturesNumToFinish = _prayerGestures.Count;
     }
 
     public List<GestureSO> GetGestures()
     {
-        //TODO: Implement
-        return null;
+        return _prayerGestures;
     }
 
     public bool IsAccepted(List<GestureSO> gestures)
     {
-        //TODO: Implement
-        return false;
+        return _gesturesNumToFinish == 0;
     }
 
 }

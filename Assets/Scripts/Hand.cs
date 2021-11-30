@@ -6,12 +6,12 @@ public class Hand : MonoBehaviour
     [SerializeField] private GestureSO gesture;
     
     private List<GestureSO> _gestures;
-    private int _currGest;
+    private int _currGestIndex;
 
     private void Start()
     {
         _gestures = LevelGlobals.Instance.gestures;
-        _currGest = _gestures.IndexOf(gesture);
+        _currGestIndex = _gestures.IndexOf(gesture);
     }
 
     public GestureSO GetGesture()
@@ -21,13 +21,13 @@ public class Hand : MonoBehaviour
     
     public void SwitchGesture()
     {
-        _currGest = (_currGest + 1) % _gestures.Count;
-        gesture = _gestures[_currGest];
+        _currGestIndex = (_currGestIndex + 1) % _gestures.Count;
+        gesture = _gestures[_currGestIndex];
     }
     
     public void SwitchGesture(GestureSO gest)
     {
-        _currGest = _gestures.IndexOf(gest);
-        gesture = _gestures[_currGest];
+        _currGestIndex = _gestures.IndexOf(gest);
+        gesture = _gestures[_currGestIndex];
     }
 }
