@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class HandsManager : MonoBehaviour
 {
-    private int _handsNum = LevelGlobals.Instance.initHands;
+    private int _handsNum;
     private List<Hand> _hands; // 0 to (_handsNum/2-1) are left side and (_handsNum/2) to _handsNum are right side
+
+    private void Awake()
+    {
+        _handsNum = LevelGlobals.Instance.initHands;
+    }
 
     /**
      * change the number of availible hands - half on each side;
