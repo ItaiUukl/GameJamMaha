@@ -5,6 +5,7 @@ using UnityEngine;
 public class HandsManager : MonoBehaviour
 {
     private int _handsNum = LevelGlobals.Instance.initHands;
+    private List<Hand> _hands; // 0 to (_handsNum/2-1) are left side and (_handsNum/2) to _handsNum are right side
 
     /**
      * change the number of availible hands - half on each side;
@@ -14,9 +15,9 @@ public class HandsManager : MonoBehaviour
         _handsNum = num;
     }
 
-    public void ChangeHand(int hand)
+    public void ChangeHand(int handIndex)
     {
-        //TODO: Implement
+        _hands[handIndex].SwitchGesture();
     }
 
     /**
@@ -24,7 +25,22 @@ public class HandsManager : MonoBehaviour
      */
     public List<GestureSO> GesturesInSide(int side)
     {
-        // TODO: implement
-        return null;
+        List<GestureSO> sideGestures = null; // FIXME: ???
+        int halfOfTheHands = _handsNum / 2;
+        if (side == LevelGlobals.LEFT)
+        {
+            for (int i = 0; i < halfOfTheHands; i++)
+            {
+                sideGestures.Add(_hands[i].Gesture);
+            }
+        }
+        else if (side == LevelGlobals.RIGHT)
+        {
+            for (int i = halfOfTheHands; i < _handsNum; i++)
+            {
+                sideGestures.Add(_hands[i].Gesture);
+            }
+        }
+        return sideGestures;
     }
 }
