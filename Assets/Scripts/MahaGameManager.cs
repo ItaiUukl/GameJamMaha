@@ -10,24 +10,31 @@ public class MahaGameManager : MonoBehaviour
 
     private Dictionary<KeyCode, int> _handKeys;
     private List<GestureSO> _gestures;
-    
-    private float _prayerTime = LevelGlobals.Instance.prayerTime;
-    
-    private int _prayerPoints = LevelGlobals.Instance.prayerPoints;
-    private float _prayerBonus = LevelGlobals.Instance.prayerTimeBonus;
+
+    private float _prayerTime;
+    private int _prayerPoints;
+    private float _prayerBonus;
 
     private List<Prayer> _prayers = new List<Prayer>{new Prayer(), new Prayer()};
 
     private int _points = 0;
     
     private List<Coroutine> _prayerRoutines = new List<Coroutine>(2);
-    private float _timer = LevelGlobals.Instance.levelTime;
+    private float _timer;
 
+    private void Awake()
+    {
+        _timer = LevelGlobals.Instance.levelTime;
+        _prayerPoints = LevelGlobals.Instance.prayerPoints;
+        _prayerBonus = LevelGlobals.Instance.prayerTimeBonus;
+        _prayerTime = LevelGlobals.Instance.prayerTime;
+        _handKeys = LevelGlobals.Instance.handKeys;
+        _gestures = LevelGlobals.Instance.gestures;
+    }
 
     private void Start()
     {
-        _handKeys = LevelGlobals.Instance.handKeys;
-        _gestures = LevelGlobals.Instance.gestures;
+        Debug.Log("Manager Start");
         
         _prayerRoutines[0] = StartCoroutine(StartPrayer(0));
         _prayerRoutines[1] = StartCoroutine(StartPrayer(1));

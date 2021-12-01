@@ -16,6 +16,7 @@ public class Hand : MonoBehaviour
         _gestures = LevelGlobals.Instance.gestures;
         _currGestIndex = _gestures.IndexOf(Gesture);
         gestureRenderer.sprite = gesture.sprite;
+        // Debug.Log(gesture.gestureName);
     }
     
     public void SwitchGesture()

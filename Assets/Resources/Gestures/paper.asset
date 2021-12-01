@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4fa8faf10a4f494aaaec81c166b1f25, type: 3}
-  m_Name: New Gesture
+  m_Name: paper
   m_EditorClassIdentifier: 
-  gestureId: 0
-  gestureName: Test
-  sprite: {fileID: 21300000, guid: 738ba8738383a1e4c9d8e72f2c8c23c5, type: 3}
+  gestureId: 1
+  gestureName: paper
+  sprite: {fileID: 21300000, guid: 8925968630af88c4e84ac024a3ccf44e, type: 3}

@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4fa8faf10a4f494aaaec81c166b1f25, type: 3}
-  m_Name: square
+  m_Name: stone
   m_EditorClassIdentifier: 
-  gestureId: 1
-  gestureName: vi
-  sprite: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  gestureId: 0
+  gestureName: Hand
+  sprite: {fileID: 21300000, guid: 738ba8738383a1e4c9d8e72f2c8c23c5, type: 3}

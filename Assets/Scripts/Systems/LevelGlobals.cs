@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,7 +6,10 @@ public class LevelGlobals : Singleton<LevelGlobals>
 {
     public const int LEFT = 0, RIGHT = 1;
     
-    public Dictionary<KeyCode, int> handKeys;
+    [SerializeField] public Dictionary<KeyCode, int> handKeys = new Dictionary<KeyCode, int>(){
+        {KeyCode.A, 0},
+        {KeyCode.S, 1}
+    };
     public List<GestureSO> gestures;
 
     public float levelTime = 90f;
@@ -19,4 +23,9 @@ public class LevelGlobals : Singleton<LevelGlobals>
 
 
     protected LevelGlobals() {}
+
+    private void Awake()
+    {
+        
+    }
 }
