@@ -25,11 +25,14 @@ public class MahaGameManager : MonoBehaviour
     private List<Prayer> _prayers;
     [SerializeField] private List<Slider> prayersTimer = new List<Slider>(2);
     private List<Coroutine> _prayerRoutines = new List<Coroutine>(2);
+    [SerializeField] private Slider gameTimer;
     private float _timer;
+    private float _maxTime;
 
     private void Awake()
     {
         _timer = LevelGlobals.Instance.levelTime;
+        _maxTime = LevelGlobals.Instance.levelTime;
         _prayerPoints = LevelGlobals.Instance.prayerPoints;
         _prayerBonus = LevelGlobals.Instance.prayerTimeBonus;
         _prayerTime = LevelGlobals.Instance.prayerTime;
@@ -60,7 +63,8 @@ public class MahaGameManager : MonoBehaviour
         }
 
         // increase game and prayer timers
-        _timer -= Time.deltaTime;
+        _timer -= Time.deltaTime; 
+        gameTimer.value = _timer / _maxTime;
         prayersTimer[0].value -= (1 / _prayerTime) * Time.deltaTime;
         prayersTimer[1].value -= (1 / _prayerTime) * Time.deltaTime;
         if (_timer <= 0f)
@@ -94,6 +98,7 @@ public class MahaGameManager : MonoBehaviour
     private void GameOver()
     {
         Debug.Log("You lost the round, point: " + _points);
+        Time.timeScale = 0;
     }
 
     private int HandSide(int hand)
@@ -106,7 +111,14 @@ public class MahaGameManager : MonoBehaviour
     {
         StopCoroutine(_prayerRoutines[side]);
         
+        // update timer
         _timer += _prayerBonus;
+        // _maxTime += _prayerBonus;
+        if (_timer >= _maxTime)
+        {
+            _timer = _maxTime;
+        }
+        
         _points += _prayers[side].PrayerSize * _prayerPoints;
         scoreText.text = "Score " + _points.ToString();
 
