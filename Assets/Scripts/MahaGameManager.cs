@@ -23,6 +23,7 @@ public class MahaGameManager : MonoBehaviour
     private int _points = 0;
     
     private List<Prayer> _prayers;
+    [SerializeField] private List<Slider> prayersTimer = new List<Slider>(2);
     private List<Coroutine> _prayerRoutines = new List<Coroutine>(2);
     private float _timer;
 
@@ -58,7 +59,10 @@ public class MahaGameManager : MonoBehaviour
             Application.Quit();
         }
 
+        // increase game and prayer timers
         _timer -= Time.deltaTime;
+        prayersTimer[0].value -= (1 / _prayerTime) * Time.deltaTime;
+        prayersTimer[1].value -= (1 / _prayerTime) * Time.deltaTime;
         if (_timer <= 0f)
         {
             GameOver();
@@ -83,6 +87,7 @@ public class MahaGameManager : MonoBehaviour
             
             prayersManager.DestroyPrayer(side);
             Debug.Log("Prayer Failed");
+            prayersTimer[side].value = 1;
         }
     }
     
@@ -107,6 +112,7 @@ public class MahaGameManager : MonoBehaviour
 
         prayersManager.DestroyPrayer(side);
         _prayerRoutines[side] = StartCoroutine(StartPrayer(side));
+        prayersTimer[side].value = 1;
     }
     
     private void ChangeGesture(int hand)
