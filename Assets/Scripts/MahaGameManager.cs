@@ -2,11 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class MahaGameManager : MonoBehaviour
 {
+    // todo: Temporary fields
     [SerializeField] private HandsManager handsManager;
+    [SerializeField] private Text scoreText;
 
     private Dictionary<KeyCode, int> _handKeys;
     private List<GestureSO> _gestures;
@@ -15,10 +18,10 @@ public class MahaGameManager : MonoBehaviour
     private int _prayerPoints;
     private float _prayerBonus;
 
-    private List<Prayer> _prayers = new List<Prayer>{new Prayer(), new Prayer()};
 
     private int _points = 0;
     
+    private List<Prayer> _prayers = new List<Prayer>{new Prayer(), new Prayer()};
     private List<Coroutine> _prayerRoutines = new List<Coroutine>(2);
     private float _timer;
 
@@ -71,7 +74,7 @@ public class MahaGameManager : MonoBehaviour
         while (_timer > 0f) // stop when game over
         {
             _prayers[side].Generate(_gestures, handsManager.GesturesInSide(side));
-
+            Debug.Log(1);
             yield return new WaitForSeconds(_prayerTime);
             
             Debug.Log("Prayer Failed");
@@ -85,6 +88,7 @@ public class MahaGameManager : MonoBehaviour
 
     private int HandSide(int hand)
     {
+        // todo: won't work with less than 10 hands
         return hand < 5 ? LevelGlobals.LEFT : LevelGlobals.RIGHT;
     }
 
@@ -94,6 +98,7 @@ public class MahaGameManager : MonoBehaviour
         
         _timer += _prayerBonus;
         _points += _prayers[side].PrayerSize * _prayerPoints;
+        scoreText.text = "Score " + _points.ToString();
 
         _prayerRoutines[side] = StartCoroutine(StartPrayer(side));
     }

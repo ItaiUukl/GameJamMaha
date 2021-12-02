@@ -3,9 +3,10 @@ using UnityEngine;
 
 public class Prayer
 {
-    private int _size = LevelGlobals.Instance.initPrayerSize;
+    //private int _size = LevelGlobals.Instance.initPrayerSize;
+    private int _size = 2;
 
-    private List<GestureSO> _prayerGestures;
+    private List<GestureSO> _prayerGestures = new List<GestureSO>();
 
     public int PrayerSize
     {
@@ -18,7 +19,7 @@ public class Prayer
     }
 
     /**
-     * generate a sequance of gestures in length of initPrayerSize - and from specific list.
+     * generate a sequence of gestures in length of initPrayerSize - and from specific list.
      */
     public void Generate(List<GestureSO> gestures, List<GestureSO> avoid)
     {
@@ -49,6 +50,10 @@ public class Prayer
      */
     public bool IsAccepted(List<GestureSO> gestures)
     {
+        if (gestures.Count == 0)
+        {
+            return false;
+        }
         for (int i = 0; i < gestures.Count; i++)
         {
             if (gestures[i].gestureId != _prayerGestures[i].gestureId)

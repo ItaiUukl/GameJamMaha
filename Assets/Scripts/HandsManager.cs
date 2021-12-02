@@ -30,7 +30,7 @@ public class HandsManager : MonoBehaviour
      */
     public List<GestureSO> GesturesInSide(int side)
     {
-        List<GestureSO> sideGestures = null; // FIXME: ???
+        List<GestureSO> sideGestures = new List<GestureSO>();
         int halfOfTheHands = _handsNum / 2;
         if (side == LevelGlobals.LEFT)
         {
