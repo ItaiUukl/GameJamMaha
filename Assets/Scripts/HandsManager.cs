@@ -20,6 +20,11 @@ public class HandsManager : MonoBehaviour
         _handsNum = num;
     }
 
+    public int GetHandsNum()
+    {
+        return _handsNum;
+    }
+
     public void ChangeHand(int handIndex)
     {
         _hands[handIndex].SwitchGesture();

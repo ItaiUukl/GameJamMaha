@@ -3,10 +3,14 @@ using UnityEngine;
 
 public class Prayer
 {
-    //private int _size = LevelGlobals.Instance.initPrayerSize;
-    private int _size = 2;
+    private int _size;
+    private List<GestureSO> _prayerGestures;
 
-    private List<GestureSO> _prayerGestures = new List<GestureSO>();
+    public Prayer(int size)
+    {
+        _size = size;
+        _prayerGestures = new List<GestureSO>(_size);
+    }
 
     public int PrayerSize
     {
@@ -23,14 +27,15 @@ public class Prayer
      */
     public void Generate(List<GestureSO> gestures, List<GestureSO> avoid)
     {
-        for (int i = 0; i < gestures.Count; i++)
+        _prayerGestures = new List<GestureSO>(_size);
+        for (int i = 0; i < _size; i++)
         {
-            while (true) 
+            while (true)
             {
                 GestureSO newGesture = gestures[Random.Range(0, gestures.Count)];
                 if (newGesture.gestureId != avoid[i].gestureId)
                 {
-                    _prayerGestures[i] = newGesture;
+                    _prayerGestures.Add(newGesture);
                     break;
                 }
             }
@@ -54,6 +59,7 @@ public class Prayer
         {
             return false;
         }
+
         for (int i = 0; i < gestures.Count; i++)
         {
             if (gestures[i].gestureId != _prayerGestures[i].gestureId)
@@ -61,6 +67,7 @@ public class Prayer
                 return false;
             }
         }
+
         return true;
     }
 }
