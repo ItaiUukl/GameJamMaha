@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4fa8faf10a4f494aaaec81c166b1f25, type: 3}
   m_Name: point
   m_EditorClassIdentifier: 
-  gestureId: 0
-  gestureName: 
-  sprite: {fileID: 0}
+  gestureId: 2
+  gestureName: Point
+  sprite: {fileID: 21300000, guid: e5ab0af84ed7e5a4890d249e98471cba, type: 3}
