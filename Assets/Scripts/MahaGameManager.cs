@@ -16,13 +16,11 @@ public class MahaGameManager : MonoBehaviour
     private List<GestureSO> _gestures;
 
     private float _prayerTime;
-    private int _prayerPoints;
     private float _prayerBonus;
 
 
     private int _points = 0;
     
-    private List<Prayer> _prayers;
     [SerializeField] private List<Slider> prayersTimer = new List<Slider>(2);
     private List<Coroutine> _prayerRoutines = new List<Coroutine>(2);
     [SerializeField] private Slider gameTimer;
@@ -33,22 +31,15 @@ public class MahaGameManager : MonoBehaviour
     {
         _timer = LevelGlobals.Instance.levelTime;
         _maxTime = LevelGlobals.Instance.levelTime;
-        _prayerPoints = LevelGlobals.Instance.prayerPoints;
         _prayerBonus = LevelGlobals.Instance.prayerTimeBonus;
         _prayerTime = LevelGlobals.Instance.prayerTime;
         _handKeys = LevelGlobals.Instance.handKeys;
         _gestures = LevelGlobals.Instance.gestures;
-        
-        int initPrayerSize = LevelGlobals.Instance.initPrayerSize;
-        _prayers = new List<Prayer>{new Prayer(initPrayerSize), new Prayer(initPrayerSize)};
     }
 
     private void Start()
     {
-        //_prayerRoutines[0] = StartCoroutine(StartPrayer(0));
-        //_prayerRoutines[1] = StartCoroutine(StartPrayer(1));
-        _prayerRoutines.Add(StartCoroutine(StartPrayer(0)));
-        _prayerRoutines.Add(StartCoroutine(StartPrayer(1)));
+        StartCoroutine(StartLevel());
     }
 
     private void Update()
@@ -81,15 +72,21 @@ public class MahaGameManager : MonoBehaviour
         }
     }
 
+    private IEnumerator StartLevel()
+    {
+        yield return new WaitForEndOfFrame();
+        _prayerRoutines.Add(StartCoroutine(StartPrayer(0)));
+        _prayerRoutines.Add(StartCoroutine(StartPrayer(1)));
+    }
+    
     private IEnumerator StartPrayer(int side)
     {
         while (_timer > 0f) // stop when game over
         {
-            _prayers[side].Generate(_gestures, handsManager.GesturesInSide(side));
-            prayersManager.ShowPrayersOnBoard(_prayers[side], side);
+            prayersManager.Generate(side, handsManager.GesturesInSide(side));
+            
             yield return new WaitForSeconds(_prayerTime);
             
-            prayersManager.DestroyPrayer(side);
             Debug.Log("Prayer Failed");
             prayersTimer[side].value = 1;
         }
@@ -113,16 +110,12 @@ public class MahaGameManager : MonoBehaviour
         
         // update timer
         _timer += _prayerBonus;
-        // _maxTime += _prayerBonus;
-        if (_timer >= _maxTime)
-        {
-            _timer = _maxTime;
-        }
-        
-        _points += _prayers[side].PrayerSize * _prayerPoints;
-        scoreText.text = "Score " + _points.ToString();
 
-        prayersManager.DestroyPrayer(side);
+        _timer = Math.Min(_timer, _maxTime);
+
+        _points += prayersManager.Score(side);
+        scoreText.text = "Score " + _points;
+        
         _prayerRoutines[side] = StartCoroutine(StartPrayer(side));
         prayersTimer[side].value = 1;
     }
@@ -133,7 +126,7 @@ public class MahaGameManager : MonoBehaviour
         
         handsManager.ChangeHand(hand);
         
-        if (_prayers[side].IsAccepted(handsManager.GesturesInSide(side)))
+        if (prayersManager.IsAccepted(side, handsManager.GesturesInSide(side)))
         {
             CompletePrayer(side);
         }

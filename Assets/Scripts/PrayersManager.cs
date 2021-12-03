@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class PrayersManager : MonoBehaviour
 {
-    [SerializeField] private Transform _prayer1Spawn;
-    [SerializeField] private Transform _prayer2Spawn;
-    [SerializeField] private GameObject gestureHolderPref;
+    [SerializeField] private List<Prayer> prayers;
+    
+    private int _prayerPoints;
     private float _spawnRadius = 2f;
     
     // private float _prayerTime;
@@ -29,40 +29,30 @@ public class PrayersManager : MonoBehaviour
     //     Debug.Log("Prayer Failed");
     // }
 
-    /**
-     * Spawn the Gesture sprite in a circle (??) around spawnPoint
-     */
-    public void ShowPrayersOnBoard(Prayer prayer, int side)
+
+    private void Awake()
     {
-        List<GestureSO> prayerGestures = prayer.GetGestures();
-
-        for (int i = 0; i < prayerGestures.Count; i++)
-        {
-            float angle = i * Mathf.PI*2f / prayerGestures.Count;
-            Vector3 spawnDir = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle));
-            Vector3 spawnPos = GetSpawnPositionBySide(side).position + spawnDir * _spawnRadius;
-            GameObject holder = Instantiate(gestureHolderPref, spawnPos, Quaternion.identity);
-
-            holder.name = holder.name + i.ToString() + "Side" + side.ToString();
-            holder.transform.SetParent(GetSpawnPositionBySide(side));
-            holder.GetComponent<SpriteRenderer>().sprite = prayerGestures[i].sprite;
-        }
-        Debug.Log("Show Prayer");
+        _prayerPoints = LevelGlobals.Instance.prayerPoints;
     }
 
-    public void DestroyPrayer(int side)
+    private void Start()
     {
-        Transform spawnPoint = GetSpawnPositionBySide(side);
-        for(int i = 0; i < spawnPoint.childCount; i++)
-        {
-            Transform child = spawnPoint.transform.GetChild(i);
-            Destroy(child.gameObject);
-        }
-        Debug.Log("Destroy Prayer");
+        prayers[0].SpawnPrayer(0, _spawnRadius);
+        prayers[1].SpawnPrayer(1, _spawnRadius);
     }
 
-    private Transform GetSpawnPositionBySide(int side)
+    public int Score(int side)
     {
-        return side == 0 ? _prayer1Spawn : _prayer2Spawn;
+        return prayers[side].PrayerSize * _prayerPoints;
+    }
+
+    public void Generate(int side, List<GestureSO> avoid)
+    {
+        prayers[side].Generate(avoid);
+    }
+
+    public bool IsAccepted(int side, List<GestureSO> gestures)
+    {
+        return prayers[side].IsAccepted(gestures);
     }
 }

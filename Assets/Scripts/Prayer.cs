@@ -1,17 +1,14 @@
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
-public class Prayer
+public class Prayer: MonoBehaviour
 {
+    [SerializeField] private GameObject gestureHolderPref;
+    
+    private List<GameObject> _spriteHolders;
+
     private int _size;
-    private List<GestureSO> _prayerGestures;
-
-    public Prayer(int size)
-    {
-        _size = size;
-        _prayerGestures = new List<GestureSO>(_size);
-    }
-
     public int PrayerSize
     {
         get => _size;
@@ -22,24 +19,66 @@ public class Prayer
         }
     }
 
+    private int _side;
+    
+    private List<GestureSO> _prayerGestures;
+
+    private void Awake()
+    {
+        _size = LevelGlobals.Instance.initPrayerSize;
+        _spriteHolders = new List<GameObject>(_size);
+        
+        _prayerGestures = new List<GestureSO>(_size);
+    }
+    
+    /**
+     * Spawn the Gesture sprite in a circle (??) around spawnPoint
+     */
+    public void SpawnPrayer(int side, float spawnRadius)
+    {
+        _side = side;
+
+        for (int i = 0; i < _size; i++)
+        {
+            float angle = Mathf.PI * ((i + 0.5f) / _size) - Mathf.PI * 0.5f;
+            Vector3 spawnDir = new Vector3(Mathf.Cos(angle) * (2 * _side - 1), Mathf.Sin(angle), 0);
+            Vector3 spawnPos = transform.position + spawnDir * spawnRadius;
+            
+            _spriteHolders.Add(Instantiate(gestureHolderPref, spawnPos, Quaternion.identity));
+            _spriteHolders[i].name = "Holder" + i + "Side" + side;
+            _spriteHolders[i].transform.SetParent(transform);
+        }
+    }
+
     /**
      * generate a sequence of gestures in length of initPrayerSize - and from specific list.
      */
-    public void Generate(List<GestureSO> gestures, List<GestureSO> avoid)
+    public void Generate(List<GestureSO> avoid)
     {
+        List<GestureSO> gestures = LevelGlobals.Instance.gestures;
+        int identicalCount = 0;
+        List<int> gesturesIndices = new List<int>(_size); 
         _prayerGestures = new List<GestureSO>(_size);
+
         for (int i = 0; i < _size; i++)
         {
-            while (true)
+            gesturesIndices.Add(Random.Range(0, gestures.Count));
+            _prayerGestures.Add(gestures[gesturesIndices[i]]);
+            
+            if (_prayerGestures[i].gestureId == avoid[i].gestureId)
             {
-                GestureSO newGesture = gestures[Random.Range(0, gestures.Count)];
-                if (newGesture.gestureId != avoid[i].gestureId)
-                {
-                    _prayerGestures.Add(newGesture);
-                    break;
-                }
+                identicalCount++;
             }
         }
+
+        if (identicalCount >= _size)
+        {
+            int rngI = Random.Range(0, _size);
+
+            _prayerGestures[rngI] = gestures[(gesturesIndices[rngI] + 1) % gestures.Count];
+        }
+        
+        UpdateSprites();
     }
 
     /**
@@ -69,5 +108,13 @@ public class Prayer
         }
 
         return true;
+    }
+
+    private void UpdateSprites()
+    {
+        for (int i = 0; i < _size; i++)
+        {
+            _spriteHolders[i].GetComponent<SpriteRenderer>().sprite = _prayerGestures[i].sprite;
+        }
     }
 }
