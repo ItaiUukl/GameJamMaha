@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class HandsManager : MonoBehaviour
 {
-    private int _handsNum = LevelGlobals.Instance.initHands;
-    private List<Hand> _hands; // 0 to (_handsNum/2-1) are left side and (_handsNum/2) to _handsNum are right side
+    private int _handsNum;
+    [SerializeField] private List<Hand> _hands; // 0 to (_handsNum/2-1) are left side and (_handsNum/2) to _handsNum are right side
+
+    private void Awake()
+    {
+        _handsNum = LevelGlobals.Instance.initHands;
+    }
 
     /**
      * change the number of availible hands - half on each side;
@@ -13,6 +18,11 @@ public class HandsManager : MonoBehaviour
     public void SetHandsNumber(int num)
     {
         _handsNum = num;
+    }
+
+    public int GetHandsNum()
+    {
+        return _handsNum;
     }
 
     public void ChangeHand(int handIndex)
@@ -25,7 +35,7 @@ public class HandsManager : MonoBehaviour
      */
     public List<GestureSO> GesturesInSide(int side)
     {
-        List<GestureSO> sideGestures = null; // FIXME: ???
+        List<GestureSO> sideGestures = new List<GestureSO>();
         int halfOfTheHands = _handsNum / 2;
         if (side == LevelGlobals.LEFT)
         {
