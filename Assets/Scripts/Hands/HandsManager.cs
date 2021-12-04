@@ -67,4 +67,18 @@ public class HandsManager : MonoBehaviour
         
         return sideGestures;
     }
+    
+    private string GetKeyStr(int handIndex)
+    {
+        Dictionary<KeyCode, int> handKeys = LevelGlobals.Instance.handKeys;
+        foreach (KeyValuePair<KeyCode, int> entry in handKeys)
+        {
+            if (entry.Value == handIndex)
+            {
+                return entry.Key.ToString();
+            }
+        }
+        
+        return null;
+    }
 }
