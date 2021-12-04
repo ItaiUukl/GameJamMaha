@@ -1,11 +1,13 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Hand : MonoBehaviour
 {
     [SerializeField] private GestureSO gesture;
     [SerializeField] private SpriteRenderer gestureRenderer;
-    
+    [SerializeField] private TextMeshPro handKey;
+
     private List<GestureSO> _gestures;
     private int _currGestIndex;
 
@@ -30,5 +32,10 @@ public class Hand : MonoBehaviour
     {
         _currGestIndex = _gestures.IndexOf(gest);
         Gesture = _gestures[_currGestIndex];
+    }
+
+    public void InitHandKey(string key)
+    {
+        handKey.text = key;
     }
 }
