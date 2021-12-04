@@ -12,6 +12,7 @@ public class MahaGameManager : MonoBehaviour
     [SerializeField] private PrayersManager prayersManager;
     [SerializeField] private List<GestureSO> gestures;
     [SerializeField] private Text scoreText;
+    [SerializeField] private Text highScoreText;
 
     private Dictionary<KeyCode, int> _handKeys;
 
@@ -39,6 +40,7 @@ public class MahaGameManager : MonoBehaviour
         _prayerTime = LevelGlobals.Instance.prayerTime;
         _handKeys = LevelGlobals.Instance.handKeys;
         LevelGlobals.Instance.gestures ??= gestures;
+        highScoreText.text = "High Score: " + PlayerPrefs.GetInt("HighScore", 0).ToString();
     }
 
     private void Start()
@@ -112,6 +114,10 @@ public class MahaGameManager : MonoBehaviour
         _gameOver = true;
         Time.timeScale = 0;
         scoreText.text += "\nPress 'R' to reset.";
+        if (_points > PlayerPrefs.GetInt("HighScore", 0))
+        {
+            PlayerPrefs.SetInt("HighScore", _points);
+        }
     }
 
     private void IncreaseSize()
