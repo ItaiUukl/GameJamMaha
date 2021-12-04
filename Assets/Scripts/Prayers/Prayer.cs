@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class Prayer: MonoBehaviour
