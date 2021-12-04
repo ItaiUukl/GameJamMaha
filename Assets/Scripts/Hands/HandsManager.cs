@@ -14,7 +14,9 @@ public class HandsManager : MonoBehaviour
         set
         {
             _handsNum = value;
+            hands[_midHands - _handsNum].InitHandKey(GetKeyStr(_midHands - _handsNum));
             hands[_midHands - _handsNum].gameObject.SetActive(true);
+            hands[_midHands + _handsNum - 1].InitHandKey(GetKeyStr(_midHands + _handsNum - 1));
             hands[_midHands + _handsNum - 1].gameObject.SetActive(true);
         }
     }
@@ -66,5 +68,19 @@ public class HandsManager : MonoBehaviour
         }
         
         return sideGestures;
+    }
+    
+    private string GetKeyStr(int handIndex)
+    {
+        Dictionary<KeyCode, int> handKeys = LevelGlobals.Instance.handKeys;
+        foreach (KeyValuePair<KeyCode, int> entry in handKeys)
+        {
+            if (entry.Value == handIndex)
+            {
+                return entry.Key.ToString();
+            }
+        }
+        Debug.Log("NO for " + handIndex.ToString());
+        return null;
     }
 }
