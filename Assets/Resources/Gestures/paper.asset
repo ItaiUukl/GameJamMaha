@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gestureId: 1
   gestureName: paper
-  sprite: {fileID: 21300000, guid: 8925968630af88c4e84ac024a3ccf44e, type: 3}
+  sprite: {fileID: 21300000, guid: c56a181d4ef2c84429846a34d7690309, type: 3}
