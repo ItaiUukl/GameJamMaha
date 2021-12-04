@@ -29,4 +29,9 @@ public class LevelGlobals : Singleton<LevelGlobals>
 
 
     protected LevelGlobals() {}
+    
+    private void Awake()
+    {
+        gestures = new List<GestureSO>(Resources.LoadAll<GestureSO>("Gestures"));
+    }
 }
