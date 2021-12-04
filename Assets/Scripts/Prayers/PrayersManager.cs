@@ -8,7 +8,6 @@ public class PrayersManager : MonoBehaviour
     [SerializeField] private List<Prayer> prayers;
     
     private int _prayerPoints;
-    private float _spawnRadius = 2f;
     
     // private float _prayerTime;
     //
@@ -37,8 +36,8 @@ public class PrayersManager : MonoBehaviour
 
     private void Start()
     {
-        prayers[0].SpawnPrayer(0, _spawnRadius);
-        prayers[1].SpawnPrayer(1, _spawnRadius);
+        prayers[0].SpawnPrayer(0);
+        prayers[1].SpawnPrayer(1);
     }
 
     public int Score(int side)
@@ -46,6 +45,16 @@ public class PrayersManager : MonoBehaviour
         return prayers[side].PrayerSize * _prayerPoints;
     }
 
+    public void SetSize(int size, List<List<GestureSO>> avoid)
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            prayers[i].PrayerSize = size;
+            prayers[i].SpawnPrayer(i);
+            prayers[i].Generate(avoid[i]);
+        }
+    }
+    
     public void Generate(int side, List<GestureSO> avoid)
     {
         prayers[side].Generate(avoid);
