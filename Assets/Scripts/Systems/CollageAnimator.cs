@@ -6,8 +6,8 @@ public class CollageAnimator : MonoBehaviour
 {
 
     [SerializeField] private List<SpriteRenderer> sprites;
-    [SerializeField] private float animationRange = 0.25f;
-    [SerializeField] private float animationSpeed = 0.5f;
+    [SerializeField, Min(0)] private float animationRange = 0.25f;
+    [SerializeField, Min(0)] private float animationSpeed = 0.5f;
     
 
     private List<Vector3> _originalPos;
