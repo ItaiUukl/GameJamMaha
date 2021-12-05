@@ -7,26 +7,34 @@ public class HandsManager : MonoBehaviour
 
     private int _midHands;
     
-    private int _handsNum;
-    public int HandsNumber
-    {
-        get => _handsNum;
-        set
-        {
-            _handsNum = value;
-            hands[_midHands - _handsNum].InitHandKey(GetKeyStr(_midHands - _handsNum));
-            hands[_midHands - _handsNum].gameObject.SetActive(true);
-            hands[_midHands + _handsNum - 1].InitHandKey(GetKeyStr(_midHands + _handsNum - 1));
-            hands[_midHands + _handsNum - 1].gameObject.SetActive(true);
-        }
-    }
-    
+    private List<int> _handsNum;
+
     private void Start()
     {
         _midHands = hands.Count / 2;
-        HandsNumber = LevelGlobals.Instance.initHands;
+        _handsNum = new List<int> {0, 0};
+        SetHandsNumber(0, LevelGlobals.Instance.initHands);
+        SetHandsNumber(1, LevelGlobals.Instance.initHands);
     }
 
+    public int GetHandsNum(int side)
+    {
+        return _handsNum[side];
+    }
+    
+    public void IncreaseHandsNumber(int side)
+    {
+        SetHandsNumber(side, _handsNum[side] + 1);
+    }
+    
+    private void SetHandsNumber(int side, int num)
+    {
+        _handsNum[side] = num;
+        int sign = -1 + 2 * side;
+        hands[_midHands + sign*_handsNum[side] - side].InitHandKey(GetKeyStr(_midHands + sign*_handsNum[side]));
+        hands[_midHands + sign*_handsNum[side] - side].gameObject.SetActive(true);
+    }
+    
     public int HandSide(int hand)
     {
         return hand < _midHands ? LevelGlobals.LEFT : LevelGlobals.RIGHT;
@@ -39,7 +47,7 @@ public class HandsManager : MonoBehaviour
 
     public void ChangeHand(int handIndex)
     {
-        if ( _midHands - _handsNum <= handIndex && handIndex < _midHands + _handsNum)
+        if ( _midHands - _handsNum[LevelGlobals.LEFT] <= handIndex && handIndex < _midHands + _handsNum[LevelGlobals.RIGHT])
         {
             hands[handIndex].SwitchGesture();
         }
@@ -54,14 +62,14 @@ public class HandsManager : MonoBehaviour
         
         if (side == LevelGlobals.LEFT)
         {
-            for (int i = _midHands - 1; i >= _midHands - _handsNum; i--)
+            for (int i = _midHands - 1; i >= _midHands - _handsNum[side]; i--)
             {
                 sideGestures.Add(hands[i].Gesture);
             }
         }
         else if (side == LevelGlobals.RIGHT)
         {
-            for (int i = _midHands; i < _midHands + _handsNum; i++)
+            for (int i = _midHands; i < _midHands + _handsNum[side]; i++)
             {
                 sideGestures.Add(hands[i].Gesture);
             }

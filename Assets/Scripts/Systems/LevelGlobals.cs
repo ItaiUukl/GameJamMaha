@@ -17,13 +17,13 @@ public class LevelGlobals : Singleton<LevelGlobals>
     };
     public List<GestureSO> gestures;
 
-    public float levelTime = 20f;
+    public float levelTime = 120f;
     public float prayerTime = 8f;
 
     public float prayerRadius = 1.3f;
     public int prayerPoints = 5;
     public float prayerTimeBonus = 3f;
-    public float prayerPenalty = 2f;
+    public int prayerPenalty = 2;
     
     public int initHands = 1;
 
