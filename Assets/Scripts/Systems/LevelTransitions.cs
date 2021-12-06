@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +12,7 @@ public class LevelTransitions : MonoBehaviour
     }
     [SerializeField] private GameObject openingScene;
     [SerializeField] private GameObject mainLevel;
+    [SerializeField] private List<Animator> elephantAnimators;
 
     private LevelStates _states;
 
@@ -29,7 +29,11 @@ public class LevelTransitions : MonoBehaviour
         switch (_states)
         {
             case LevelStates.Opening:
-                if (Input.anyKeyDown)
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    Application.Quit();
+                }
+                else if (Input.anyKeyDown)
                 {
                     openingScene.SetActive(false);
                     mainLevel.SetActive(true);
@@ -39,10 +43,18 @@ public class LevelTransitions : MonoBehaviour
             case LevelStates.Main:
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-                    Time.timeScale = 1;
+                    elephantAnimators[0].Play("Elephant_out");
+                    elephantAnimators[1].Play("Right_out");
+                    StartCoroutine(ResetLevel());
                 }
                 break;
         }
+    }
+
+    private IEnumerator ResetLevel()
+    {
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Time.timeScale = 1;
     }
 }

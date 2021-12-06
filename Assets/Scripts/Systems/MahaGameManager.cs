@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Object = System.Object;
 
 public class MahaGameManager : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class MahaGameManager : MonoBehaviour
     [SerializeField] private PrayersManager prayersManager;
     [SerializeField] private List<TextMeshProUGUI> scoreTexts;
     [SerializeField] private TextMeshProUGUI highScoreText;
+    [SerializeField] private List<TextMeshPro> endTexts;
+    [SerializeField] private GameObject elephants;
 
     private Dictionary<KeyCode, int> _handKeys;
 
@@ -96,12 +99,16 @@ public class MahaGameManager : MonoBehaviour
     
     private void GameOver()
     {
+        int winner = _points[0] > _points[1] ? 0 : 1;
         _gameOver = true;
-        Time.timeScale = 0;
-        scoreTexts[0].text += "\nPress 'R' to reset.";
+        endTexts[winner].text = "WON";
+        endTexts[(winner + 1) % 2].text = "LOST";
+        
+        elephants.SetActive(true);
+        
         if (_points[0] > PlayerPrefs.GetInt("HighScore", 0))
         {
-            PlayerPrefs.SetInt("HighScore", _points[0]);
+            PlayerPrefs.SetInt("HighScore", _points[winner]);
         }
     }
 
