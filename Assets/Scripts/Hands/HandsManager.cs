@@ -31,7 +31,7 @@ public class HandsManager : MonoBehaviour
     {
         _handsNum[side] = num;
         int sign = -1 + 2 * side;
-        hands[_midHands + sign*_handsNum[side] - side].InitHandKey(GetKeyStr(_midHands + sign*_handsNum[side]));
+        hands[_midHands + sign*_handsNum[side] - side].InitHandKey(GetKeyStr(_midHands + sign*_handsNum[side] - side));
         hands[_midHands + sign*_handsNum[side] - side].gameObject.SetActive(true);
     }
     
