@@ -13,7 +13,6 @@ public class MahaGameManager : MonoBehaviour
     [SerializeField] private PrayersManager prayersManager;
     [SerializeField] private List<TextMeshProUGUI> scoreTexts;
     [SerializeField] private TextMeshProUGUI highScoreText;
-    [SerializeField] private AudioManager audioManager;
 
     private Dictionary<KeyCode, int> _handKeys;
 
@@ -100,7 +99,7 @@ public class MahaGameManager : MonoBehaviour
             
             yield return new WaitForSeconds(_prayerTime);
 
-            audioManager.Play("LosePrayer");
+            AudioManager.Instance.Play("LosePrayer");
             _points[side] -= LevelGlobals.Instance.prayerPenalty;
             prayerSliders[side].value = 1;
         }
@@ -108,7 +107,7 @@ public class MahaGameManager : MonoBehaviour
     
     private void GameOver()
     {
-        audioManager.Play("EndGame"); // might bug with line 112
+        AudioManager.Instance.Play("EndGame"); // might bug with line 112
         _gameOver = true;
         Time.timeScale = 0;
         scoreTexts[0].text += "\nPress 'R' to reset.";
@@ -138,7 +137,7 @@ public class MahaGameManager : MonoBehaviour
     private void CompletePrayer(int side)
     {
         StopCoroutine(_prayerRoutines[side]);
-        audioManager.Play("WinPrayer");
+        AudioManager.Instance.Play("WinPrayer");
 
         _completed[side]++;
 
@@ -161,7 +160,7 @@ public class MahaGameManager : MonoBehaviour
         int side = handsManager.HandSide(hand);
         
         handsManager.ChangeHand(hand);
-        audioManager.Play("HandChange");
+        AudioManager.Instance.Play("HandChange");
 
         if (prayersManager.IsAccepted(side, handsManager.GesturesInSide(side)))
         {
