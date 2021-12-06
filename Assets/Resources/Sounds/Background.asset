@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 42e4b9808a1df4d4393a69a6da5a0af1, type: 3}
-  m_Name: MOO
+  m_Name: Background
   m_EditorClassIdentifier: 
-  soundName: MOO
-  clip: {fileID: 8300000, guid: a53c5b062b4c84205843c8e123ab56a9, type: 3}
-  volume: 1
+  soundName: BG_MUSIC
+  clip: {fileID: 8300000, guid: 36539e32c1b66493791257550a431cc3, type: 3}
+  volume: 0.5
   pitch: 0
-  loop: 0
-  overlap: 1
+  loop: 1
+  overlap: 0
   source: {fileID: 0}
