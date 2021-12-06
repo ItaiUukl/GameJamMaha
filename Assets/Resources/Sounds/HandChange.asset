@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42e4b9808a1df4d4393a69a6da5a0af1, type: 3}
   m_Name: HandChange
   m_EditorClassIdentifier: 
-  soundName: DING
+  soundName: HandChange
   clip: {fileID: 8300000, guid: 968c383e790034f69b017f6374363b62, type: 3}
   volume: 1
   pitch: 0
