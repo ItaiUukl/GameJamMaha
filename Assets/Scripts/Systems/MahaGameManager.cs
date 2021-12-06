@@ -24,7 +24,10 @@ public class MahaGameManager : MonoBehaviour
 
     private Vector2Int _points = Vector2Int.zero;
     private Vector2Int _completed = Vector2Int.zero;
-    
+
+    [SerializeField] private List<Sprite> sliderSpriteList = new List<Sprite>(4);
+    [SerializeField] private List<SpriteRenderer> backGroundSliderSpriteList = new List<SpriteRenderer>(2);
+    [SerializeField] private List<Image> sliderImageList = new List<Image>(2);
     [SerializeField] private List<Slider> prayerSliders = new List<Slider>(2);
     private List<Coroutine> _prayerRoutines = new List<Coroutine>(2);
     [SerializeField] private Slider gameTimerSlider;
@@ -45,6 +48,10 @@ public class MahaGameManager : MonoBehaviour
     private void Start()
     {
         StartCoroutine(StartLevel());
+        sliderImageList[0].sprite = sliderSpriteList[0];
+        sliderImageList[1].sprite = sliderSpriteList[0];
+        backGroundSliderSpriteList[0].sprite = sliderSpriteList[0];
+        backGroundSliderSpriteList[1].sprite = sliderSpriteList[0];
     }
 
     private void Update()
@@ -131,9 +138,14 @@ public class MahaGameManager : MonoBehaviour
         _prayerRoutines[0] = StartCoroutine(StartPrayer(0));
         _prayerRoutines[1] = StartCoroutine(StartPrayer(1));
         
+        
         _size[side]++;
         handsManager.IncreaseHandsNumber(side);
         prayersManager.SetSize(side, _size[side], handsManager.GesturesInSide(side));
+
+        // change timer mandala size
+        sliderImageList[side].sprite = sliderSpriteList[_size[side] - 1];
+        backGroundSliderSpriteList[side].sprite = sliderSpriteList[_size[side] - 1];
     }
 
     private void CompletePrayer(int side)
