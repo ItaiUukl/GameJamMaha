@@ -39,7 +39,7 @@ public class MahaGameManager : MonoBehaviour
         _prayerBonus = LevelGlobals.Instance.prayerTimeBonus;
         _prayerTime = LevelGlobals.Instance.prayerTime;
         _handKeys = LevelGlobals.Instance.handKeys;
-        highScoreText.text = "High Score: " + PlayerPrefs.GetInt("HighScore", 0);
+        // highScoreText.text = "High Score: " + PlayerPrefs.GetInt("HighScore", 0);
     }
 
     private void Start()
@@ -144,7 +144,7 @@ public class MahaGameManager : MonoBehaviour
         _completed[side]++;
 
         _points[side] += Mathf.CeilToInt(prayersManager.Score(side) * prayerSliders[side].value);
-        scoreTexts[side].text = "Score " + _points[side];
+        scoreTexts[side].text = _points[side].ToString();
 
         if (_completed[side] > handsManager.GetHandsNum(side) * 4)
         {
