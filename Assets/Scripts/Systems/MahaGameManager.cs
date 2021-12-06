@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -10,20 +11,19 @@ public class MahaGameManager : MonoBehaviour
     // todo: Temporary fields
     [SerializeField] private HandsManager handsManager;
     [SerializeField] private PrayersManager prayersManager;
-    [SerializeField] private List<GestureSO> gestures;
-    [SerializeField] private Text scoreText;
-    [SerializeField] private Text highScoreText;
+    [SerializeField] private List<TextMeshProUGUI> scoreTexts;
+    [SerializeField] private TextMeshProUGUI highScoreText;
 
     private Dictionary<KeyCode, int> _handKeys;
 
-    private int _size;
+    private Vector2Int _size;
     private bool _gameOver = false;
     
     private float _prayerTime;
     private float _prayerBonus;
 
-    private int _points = 0;
-    private int _completed = 0;
+    private Vector2Int _points = Vector2Int.zero;
+    private Vector2Int _completed = Vector2Int.zero;
     
     [SerializeField] private List<Slider> prayerSliders = new List<Slider>(2);
     private List<Coroutine> _prayerRoutines = new List<Coroutine>(2);
@@ -33,14 +33,13 @@ public class MahaGameManager : MonoBehaviour
 
     private void Awake()
     {
-        _size = LevelGlobals.Instance.initHands;
+        _size = new Vector2Int( LevelGlobals.Instance.initHands, LevelGlobals.Instance.initHands);
         _timer = LevelGlobals.Instance.levelTime;
         _maxTime = LevelGlobals.Instance.levelTime;
         _prayerBonus = LevelGlobals.Instance.prayerTimeBonus;
         _prayerTime = LevelGlobals.Instance.prayerTime;
         _handKeys = LevelGlobals.Instance.handKeys;
-        LevelGlobals.Instance.gestures ??= gestures;
-        highScoreText.text = "High Score: " + PlayerPrefs.GetInt("HighScore", 0).ToString();
+        highScoreText.text = "High Score: " + PlayerPrefs.GetInt("HighScore", 0);
     }
 
     private void Start()
@@ -58,10 +57,6 @@ public class MahaGameManager : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
-        }
-        else if (Input.GetKeyDown(KeyCode.V))
-        {
-            IncreaseSize();
         }
 
         if (_gameOver)
@@ -97,14 +92,14 @@ public class MahaGameManager : MonoBehaviour
     
     private IEnumerator StartPrayer(int side)
     {
-        while (_timer > 0f) // stop when game over
+        while (!_gameOver) // stop when game over
         {
             prayerSliders[side].value = 1;
             prayersManager.Generate(side, handsManager.GesturesInSide(side));
             
             yield return new WaitForSeconds(_prayerTime);
-            
-            _timer -= LevelGlobals.Instance.prayerPenalty;
+
+            _points[side] -= LevelGlobals.Instance.prayerPenalty;
             prayerSliders[side].value = 1;
         }
     }
@@ -113,16 +108,16 @@ public class MahaGameManager : MonoBehaviour
     {
         _gameOver = true;
         Time.timeScale = 0;
-        scoreText.text += "\nPress 'R' to reset.";
-        if (_points > PlayerPrefs.GetInt("HighScore", 0))
+        scoreTexts[0].text += "\nPress 'R' to reset.";
+        if (_points[0] > PlayerPrefs.GetInt("HighScore", 0))
         {
-            PlayerPrefs.SetInt("HighScore", _points);
+            PlayerPrefs.SetInt("HighScore", _points[0]);
         }
     }
 
-    private void IncreaseSize()
+    private void IncreaseSize(int side)
     {
-        if (_size >= handsManager.MaxHands() )
+        if (_size[side] >= handsManager.MaxHands() )
         {
             return;
         }
@@ -132,29 +127,24 @@ public class MahaGameManager : MonoBehaviour
         _prayerRoutines[0] = StartCoroutine(StartPrayer(0));
         _prayerRoutines[1] = StartCoroutine(StartPrayer(1));
         
-        _size++;
-        handsManager.HandsNumber++;
-        prayersManager.SetSize(_size, new List<List<GestureSO>>{handsManager.GesturesInSide(0),
-                                                                     handsManager.GesturesInSide(1)});
+        _size[side]++;
+        handsManager.IncreaseHandsNumber(side);
+        prayersManager.SetSize(side, _size[side], handsManager.GesturesInSide(side));
     }
 
     private void CompletePrayer(int side)
     {
         StopCoroutine(_prayerRoutines[side]);
 
-        _completed++;
-        // update timer
-        _timer += _prayerBonus;
+        _completed[side]++;
 
-        _timer = Math.Min(_timer, _maxTime);
+        _points[side] += Mathf.CeilToInt(prayersManager.Score(side) * prayerSliders[side].value);
+        scoreTexts[side].text = "Score " + _points[side];
 
-        _points += Mathf.CeilToInt(prayersManager.Score(side) * prayerSliders[side].value);
-        scoreText.text = "Score " + _points;
-
-        if (_completed > handsManager.HandsNumber * 4)
+        if (_completed[side] > handsManager.GetHandsNum(side) * 4)
         {
-            _completed = 0;
-            IncreaseSize();
+            _completed[side] = 0;
+            IncreaseSize(side);
         }
         else
         {

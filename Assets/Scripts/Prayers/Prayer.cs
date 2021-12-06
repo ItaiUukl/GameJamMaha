@@ -46,7 +46,7 @@ public class Prayer: MonoBehaviour
         for (int i = 0; i < _size; i++)
         {
             float angle = Mathf.PI * ((i + 0.5f) / _size) - Mathf.PI * 0.5f;
-            Vector3 spawnDir = new Vector3(Mathf.Cos(angle) * (2 * _side - 1), Mathf.Sin(-angle), 0);
+            Vector3 spawnDir = new Vector3(Mathf.Cos(angle) * (-2 * _side + 1), Mathf.Sin(-angle), 0);
             Vector3 spawnPos = transform.position + spawnDir * LevelGlobals.Instance.prayerRadius;
             
             _spriteHolders.Add(Instantiate(gestureHolderPref, spawnPos, Quaternion.identity));

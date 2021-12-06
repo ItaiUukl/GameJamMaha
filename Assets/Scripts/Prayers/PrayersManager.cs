@@ -43,14 +43,11 @@ public class PrayersManager : MonoBehaviour
         return prayers[side].PrayerSize * _prayerPoints;
     }
 
-    public void SetSize(int size, List<List<GestureSO>> avoid)
+    public void SetSize(int side, int size, List<GestureSO> avoid)
     {
-        for (int i = 0; i < 2; i++)
-        {
-            prayers[i].PrayerSize = size;
-            prayers[i].SpawnPrayer(i);
-            prayers[i].Generate(avoid[i]);
-        }
+        prayers[side].PrayerSize = size;
+        prayers[side].SpawnPrayer(side);
+        prayers[side].Generate(avoid);
     }
     
     public void Generate(int side, List<GestureSO> avoid)
