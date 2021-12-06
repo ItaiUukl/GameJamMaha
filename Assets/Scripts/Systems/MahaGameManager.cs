@@ -99,13 +99,17 @@ public class MahaGameManager : MonoBehaviour
             
             yield return new WaitForSeconds(_prayerTime);
 
-            _points[side] -= LevelGlobals.Instance.prayerPenalty;
+            AudioManager.Instance.Play("LosePrayer");
+            _points[side] = Math.Max(_points[side] - LevelGlobals.Instance.prayerPenalty, 0);
+            scoreTexts[side].text = "Score " + _points[side];
             prayerSliders[side].value = 1;
         }
     }
     
     private void GameOver()
     {
+        // TODO: ADD animation activation
+        AudioManager.Instance.Play("EndGame"); // might bug with line 112
         _gameOver = true;
         Time.timeScale = 0;
         scoreTexts[0].text += "\nPress 'R' to reset.";
@@ -135,6 +139,7 @@ public class MahaGameManager : MonoBehaviour
     private void CompletePrayer(int side)
     {
         StopCoroutine(_prayerRoutines[side]);
+        AudioManager.Instance.Play("WinPrayer");
 
         _completed[side]++;
 
@@ -157,7 +162,8 @@ public class MahaGameManager : MonoBehaviour
         int side = handsManager.HandSide(hand);
         
         handsManager.ChangeHand(hand);
-        
+        AudioManager.Instance.Play("HandChange");
+
         if (prayersManager.IsAccepted(side, handsManager.GesturesInSide(side)))
         {
             CompletePrayer(side);
