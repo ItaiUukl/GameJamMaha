@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42e4b9808a1df4d4393a69a6da5a0af1, type: 3}
+  m_Name: MOO
+  m_EditorClassIdentifier: 
+  soundName: MOO
+  clip: {fileID: 8300000, guid: a53c5b062b4c84205843c8e123ab56a9, type: 3}
+  volume: 1
+  pitch: 0
+  loop: 0
+  overlap: 1
+  source: {fileID: 0}
