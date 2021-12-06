@@ -66,8 +66,8 @@ public class MahaGameManager : MonoBehaviour
         // increase game and prayer timers
         _timer -= Time.deltaTime;
         gameTimerSlider.value = _timer / _maxTime;
-        prayerSliders[0].value -= (1 / _prayerTime) * Time.deltaTime;
-        prayerSliders[1].value -= (1 / _prayerTime) * Time.deltaTime;
+        prayerSliders[0].value -= (1 / _prayerTime) * Time.deltaTime * 0.5f;
+        prayerSliders[1].value -= (1 / _prayerTime) * Time.deltaTime * 0.5f;
         
         if (_timer <= 0f)
         {
