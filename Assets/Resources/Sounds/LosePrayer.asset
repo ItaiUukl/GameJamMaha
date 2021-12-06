@@ -15,7 +15,7 @@ MonoBehaviour:
   soundName: LosePrayer
   clip: {fileID: 8300000, guid: a53c5b062b4c84205843c8e123ab56a9, type: 3}
   volume: 1
-  pitch: 1.57
+  pitch: 1
   loop: 0
   overlap: 1
   source: {fileID: 0}

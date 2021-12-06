@@ -15,7 +15,7 @@ MonoBehaviour:
   soundName: HandChange
   clip: {fileID: 8300000, guid: 968c383e790034f69b017f6374363b62, type: 3}
   volume: 1
-  pitch: 0
+  pitch: 1
   loop: 0
   overlap: 1
   source: {fileID: 0}

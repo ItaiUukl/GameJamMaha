@@ -15,7 +15,7 @@ MonoBehaviour:
   soundName: Background
   clip: {fileID: 8300000, guid: 36539e32c1b66493791257550a431cc3, type: 3}
   volume: 0.5
-  pitch: 0
+  pitch: 1
   loop: 1
   overlap: 0
   source: {fileID: 0}

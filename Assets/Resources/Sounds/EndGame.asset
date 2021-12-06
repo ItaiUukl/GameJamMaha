@@ -15,7 +15,7 @@ MonoBehaviour:
   soundName: EndGame
   clip: {fileID: 8300000, guid: 98f09f479bf0643e2ac6c6b8e9ed9278, type: 3}
   volume: 1
-  pitch: 1.44
+  pitch: 1
   loop: 0
   overlap: 0
   source: {fileID: 0}
