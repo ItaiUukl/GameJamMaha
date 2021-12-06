@@ -53,3 +53,6 @@ TagManager:
   - name: OPEN
     uniqueID: 3397635087
     locked: 0
+  - name: Elephant
+    uniqueID: 2840018673
+    locked: 0
