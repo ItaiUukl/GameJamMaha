@@ -91,7 +91,9 @@ public class MahaGameManager : MonoBehaviour
             
             yield return new WaitForSeconds(_prayerTime);
 
-            _points[side] -= LevelGlobals.Instance.prayerPenalty;
+            _points[side] = Mathf.Max(_points[side] - LevelGlobals.Instance.prayerPenalty, 0);
+        
+            scoreTexts[side].text = _points[side].ToString();
             lightAnimator[side].Play("losepoints");
             AudioManager.Instance.Play("LosePrayer");
             prayerSliders[side].value = 1;
@@ -141,24 +143,18 @@ public class MahaGameManager : MonoBehaviour
 
     private void CompletePrayer(int side)
     {
-        Debug.Log("entered");
         StopCoroutine(_prayerRoutines[side]);
-        Debug.Log("routine");
         _completed[side]++;
-        Debug.Log("count");
 
         _points[side] += Mathf.CeilToInt(prayersManager.Score(side) * prayerSliders[side].value);
         
-        Debug.Log("points, slider");
         scoreTexts[side].text = _points[side].ToString();
         
-        Debug.Log("text");
         lightAnimator[side].Play("winpoints");
         
-        Debug.Log("light");
         AudioManager.Instance.Play("WinPrayer");
 
-        if (_completed[side] > handsManager.GetHandsNum(side) * 4)
+        if (_completed[side] > handsManager.GetHandsNum(side) * 3)
         {
             _completed[side] = 0;
             IncreaseSize(side);

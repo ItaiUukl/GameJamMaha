@@ -21,9 +21,9 @@ public class LevelGlobals : Singleton<LevelGlobals>
     public float prayerTime = 8f;
 
     public float prayerRadius = 2f;
-    public int prayerPoints = 5;
+    public int prayerPoints = 1;
     public float prayerTimeBonus = 3f;
-    public int prayerPenalty = 2;
+    public int prayerPenalty = 1;
     
     public int initHands = 1;
 
