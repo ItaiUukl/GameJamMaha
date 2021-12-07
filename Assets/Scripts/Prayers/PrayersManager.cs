@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PrayersManager : MonoBehaviour
@@ -30,6 +31,12 @@ public class PrayersManager : MonoBehaviour
     private void Awake()
     {
         _prayerPoints = LevelGlobals.Instance.prayerPoints;
+    }
+
+    private void Start()
+    {
+        Generate(0, LevelGlobals.Instance.gestures);
+        Generate(1, LevelGlobals.Instance.gestures);
     }
 
     public int Score(int side)

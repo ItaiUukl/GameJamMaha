@@ -15,7 +15,7 @@ MonoBehaviour:
   soundName: WinPrayer
   clip: {fileID: 8300000, guid: 3f798e1265f9e4486beb382b821d6b57, type: 3}
   volume: 1
-  pitch: 1
+  pitch: 1.64
   loop: 0
   overlap: 1
   source: {fileID: 0}

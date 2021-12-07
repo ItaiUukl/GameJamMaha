@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundName: LosePrayer
   clip: {fileID: 8300000, guid: a53c5b062b4c84205843c8e123ab56a9, type: 3}
-  volume: 1
+  volume: 0.55
   pitch: 1
   loop: 0
   overlap: 1

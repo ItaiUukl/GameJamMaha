@@ -17,7 +17,7 @@ public class LevelGlobals : Singleton<LevelGlobals>
     };
     public List<GestureSO> gestures;
 
-    public float levelTime = 10f;
+    public float levelTime = 60f;
     public float prayerTime = 8f;
 
     public float prayerRadius = 2f;

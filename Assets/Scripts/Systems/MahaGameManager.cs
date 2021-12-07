@@ -13,6 +13,7 @@ public class MahaGameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI highScoreText;
     [SerializeField] private List<TextMeshPro> endTexts;
     [SerializeField] private GameObject elephants;
+    [SerializeField] private List<Animator> lightAnimator;
 
     private Dictionary<KeyCode, int> _handKeys;
 
@@ -47,7 +48,8 @@ public class MahaGameManager : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(StartLevel());
+        _prayerRoutines.Add(StartCoroutine(StartPrayer(0)));
+        _prayerRoutines.Add(StartCoroutine(StartPrayer(1)));
         sliderImageList[0].sprite = sliderSpriteList[0];
         sliderImageList[1].sprite = sliderSpriteList[0];
         backGroundSliderSpriteList[0].sprite = sliderSpriteList[0];
@@ -79,13 +81,6 @@ public class MahaGameManager : MonoBehaviour
             }
         }
     }
-
-    private IEnumerator StartLevel()
-    {
-        yield return new WaitForEndOfFrame();
-        _prayerRoutines.Add(StartCoroutine(StartPrayer(0)));
-        _prayerRoutines.Add(StartCoroutine(StartPrayer(1)));
-    }
     
     private IEnumerator StartPrayer(int side)
     {
@@ -97,18 +92,24 @@ public class MahaGameManager : MonoBehaviour
             yield return new WaitForSeconds(_prayerTime);
 
             _points[side] -= LevelGlobals.Instance.prayerPenalty;
+            lightAnimator[side].Play("losepoints");
+            AudioManager.Instance.Play("LosePrayer");
             prayerSliders[side].value = 1;
         }
     }
     
     private void GameOver()
     {
+        AudioManager.Instance.Play("EndGame");
         int winner = _points[0] > _points[1] ? 0 : 1;
         _gameOver = true;
         endTexts[winner].text = "WON";
         endTexts[(winner + 1) % 2].text = "LOST";
         
         elephants.SetActive(true);
+        
+        StopCoroutine(_prayerRoutines[0]);
+        StopCoroutine(_prayerRoutines[1]);
         
         if (_points[0] > PlayerPrefs.GetInt("HighScore", 0))
         {
@@ -140,12 +141,22 @@ public class MahaGameManager : MonoBehaviour
 
     private void CompletePrayer(int side)
     {
+        Debug.Log("entered");
         StopCoroutine(_prayerRoutines[side]);
-
+        Debug.Log("routine");
         _completed[side]++;
+        Debug.Log("count");
 
         _points[side] += Mathf.CeilToInt(prayersManager.Score(side) * prayerSliders[side].value);
+        
+        Debug.Log("points, slider");
         scoreTexts[side].text = _points[side].ToString();
+        
+        Debug.Log("text");
+        lightAnimator[side].Play("winpoints");
+        
+        Debug.Log("light");
+        AudioManager.Instance.Play("WinPrayer");
 
         if (_completed[side] > handsManager.GetHandsNum(side) * 4)
         {
@@ -161,6 +172,7 @@ public class MahaGameManager : MonoBehaviour
     private void ChangeGesture(int hand)
     {
         int side = handsManager.HandSide(hand);
+        AudioManager.Instance.Play("HandChange");
         
         handsManager.ChangeHand(hand);
         
