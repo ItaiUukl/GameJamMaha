@@ -4,7 +4,7 @@ using UnityEngine;
 public class Prayer: MonoBehaviour
 {
     [SerializeField] private GameObject gestureHolderPref;
-    [SerializeField] private List<GameObject> _spriteHolders = new List<GameObject>(4);
+    [SerializeField] private List<SpriteRenderer> _spriteHolders = new List<SpriteRenderer>(4);
 
     private int _size;
     public int PrayerSize
@@ -26,33 +26,6 @@ public class Prayer: MonoBehaviour
         _size = LevelGlobals.Instance.initHands;
         // _spriteHolders = new List<GameObject>(_size);
         _prayerGestures = new List<GestureSO>(_size);
-    }
-    
-    /**
-     * Spawn the Gesture sprite in a circle (??) around spawnPoint
-     */
-    public void SpawnPrayer(int side)
-    {
-        // _side = side;
-        //
-        // foreach (GameObject sprite in _spriteHolders)
-        // {
-        //     Destroy(sprite);
-        // }
-        //
-        // _spriteHolders = new List<GameObject>(_size);
-        //
-        // for (int i = 0; i < _size; i++)
-        // {
-        //     float angle = Mathf.PI * ((i + 0.5f) / _size) - Mathf.PI * 0.5f;
-        //     Vector3 spawnDir = new Vector3(Mathf.Cos(angle) * (-2 * _side + 1), Mathf.Sin(-angle), 0);
-        //     Vector3 spawnPos = transform.position + spawnDir * LevelGlobals.Instance.prayerRadius;
-        //     
-        //     _spriteHolders.Add(Instantiate(gestureHolderPref, spawnPos, Quaternion.identity));
-        //     _spriteHolders[i].name = "Holder" + i + "Side" + side;
-        //     _spriteHolders[i].transform.SetParent(transform);
-        //     _spriteHolders[i].GetComponent<SpriteRenderer>().flipX = _side == LevelGlobals.RIGHT;
-        // }
     }
 
     /**
@@ -119,7 +92,7 @@ public class Prayer: MonoBehaviour
     {
         for (int i = 0; i < _size; i++)
         {
-            _spriteHolders[i].GetComponent<SpriteRenderer>().sprite = _prayerGestures[i].sprite;
+            _spriteHolders[i].sprite = _prayerGestures[i].sprite;
         }
     }
 }

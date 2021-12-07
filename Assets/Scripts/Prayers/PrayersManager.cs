@@ -32,12 +32,6 @@ public class PrayersManager : MonoBehaviour
         _prayerPoints = LevelGlobals.Instance.prayerPoints;
     }
 
-    private void Start()
-    {
-        prayers[0].SpawnPrayer(0);
-        prayers[1].SpawnPrayer(1);
-    }
-
     public int Score(int side)
     {
         return prayers[side].PrayerSize * _prayerPoints;
@@ -46,7 +40,6 @@ public class PrayersManager : MonoBehaviour
     public void SetSize(int side, int size, List<GestureSO> avoid)
     {
         prayers[side].PrayerSize = size;
-        prayers[side].SpawnPrayer(side);
         prayers[side].Generate(avoid);
     }
     
