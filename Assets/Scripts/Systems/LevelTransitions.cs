@@ -11,7 +11,7 @@ public class LevelTransitions : MonoBehaviour
         Main
     }
     [SerializeField] private GameObject openingScene;
-    [SerializeField] private GameObject mainLevel;
+    [SerializeField] private List<GameObject> mainLevel;
     [SerializeField] private List<Animator> elephantAnimators;
 
     private LevelStates _states;
@@ -19,7 +19,10 @@ public class LevelTransitions : MonoBehaviour
     private void Start()
     {
         openingScene.SetActive(true);
-        mainLevel.SetActive(false);
+        foreach (GameObject obj in mainLevel)
+        {
+            obj.SetActive(false);
+        }
         _states = LevelStates.Opening;
         AudioManager.Instance.Play("Background");
     }
@@ -36,7 +39,10 @@ public class LevelTransitions : MonoBehaviour
                 else if (Input.anyKeyDown)
                 {
                     openingScene.SetActive(false);
-                    mainLevel.SetActive(true);
+                    foreach (GameObject obj in mainLevel)
+                    {
+                        obj.SetActive(true);
+                    }
                     _states = LevelStates.Main;
                 }
                 break;

@@ -147,7 +147,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 21553344}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.3444475, y: 1.1373764, z: -29.925547}
+  m_LocalPosition: {x: 1.3444475, y: 1.1373764, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 90344942}
@@ -11711,6 +11711,10 @@ MonoBehaviour:
   - {fileID: 1725607085}
   - {fileID: 1462578786}
   highScoreText: {fileID: 1378421687}
+  endTexts:
+  - {fileID: 390344154}
+  - {fileID: 212391883}
+  elephants: {fileID: 21553344}
   prayerSliders:
   - {fileID: 568728782}
   - {fileID: 2078371805}
@@ -11991,6 +11995,65 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 759374725737226724, guid: d10e1574596b086439ce80999db74d13, type: 3}
   m_PrefabInstance: {fileID: 732233301}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1662498542
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1662498544}
+  - component: {fileID: 1662498543}
+  m_Layer: 0
+  m_Name: Transitions
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1662498543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1662498542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3418bcd5429a8234d92ed2e5330f72c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openingScene: {fileID: 1774405613}
+  mainLevel:
+  - {fileID: 1595760305}
+  - {fileID: 1001174977}
+  - {fileID: 518148257}
+  - {fileID: 286378123}
+  - {fileID: 1351325002}
+  - {fileID: 688992150}
+  - {fileID: 201304685}
+  - {fileID: 1941294680}
+  - {fileID: 1730940196}
+  - {fileID: 1784052591}
+  - {fileID: 1821368215}
+  elephantAnimators:
+  - {fileID: 90344941}
+  - {fileID: 1521851256}
+--- !u!4 &1662498544
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1662498542}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.2223357, y: 0.15760964, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1667321581
 GameObject:
   m_ObjectHideFlags: 0

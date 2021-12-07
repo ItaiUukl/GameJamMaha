@@ -132,6 +132,7 @@ MonoBehaviour:
   gesture: {fileID: 11400000, guid: f8dd053085b1c6f44a704ad35790abe4, type: 2}
   gestureRenderer: {fileID: 759374726704012307}
   handKey: {fileID: 1829547102564806613}
+  animator: {fileID: 52400027065313138}
 --- !u!1 &759374726316165794
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,6 +7,7 @@ public class Hand : MonoBehaviour
     [SerializeField] private GestureSO gesture;
     [SerializeField] private SpriteRenderer gestureRenderer;
     [SerializeField] private TextMeshPro handKey;
+    [SerializeField] private Animator animator;
 
     private List<GestureSO> _gestures;
     private int _currGestIndex;
@@ -23,6 +24,7 @@ public class Hand : MonoBehaviour
     
     public void SwitchGesture()
     {
+        animator.Play("handswitch");
         _currGestIndex = (_currGestIndex + 1) % _gestures.Count;
         Gesture = _gestures[_currGestIndex];
         gestureRenderer.sprite = gesture.sprite;
